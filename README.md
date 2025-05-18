@@ -1,5 +1,5 @@
 # Assignment
-
+[![Publish Docker image](https://github.com/alankar23/karini-lab/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/alankar23/karini-lab/actions/workflows/docker-publish.yml)
 ## Task 1: Containerize the Application
 
 The `app/` directory contains the Flask application that returns random quotation from a collection of quotes, clone to linux fortune command.
