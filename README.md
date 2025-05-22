@@ -67,7 +67,7 @@ terraform apply
 ### Configure `kubectl` Access
 
 ```bash
-aws eks update-kubeconfig --region ap-south-1 --name klustah
+aws eks update-kubeconfig --region ap-south-1 --name kubernets
 ```
 
 ---
