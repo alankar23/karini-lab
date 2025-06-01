@@ -9,18 +9,12 @@ provider "aws" {
   }
 }
 
-# Filter out local zones, which are not currently supported 
-# with managed node groups
-data "aws_availability_zones" "available" {
-  filter {
-    name   = "opt-in-status"
-    values = ["opt-in-not-required"]
-  }
-}
+data "aws_availability_zones" "available" {}
 
 locals {
   cluster_name = "kubernets"
   cluster_version = "1.32"
+  network_cidr = "10.0.0.0/16"
 }
 
 module "vpc" {
@@ -29,8 +23,8 @@ module "vpc" {
 
   name = "kubernets-vpc"
 
-  cidr = "10.0.0.0/16"
-  azs  = slice(data.aws_availability_zones.available.names, 0, 3)
+  cidr = local.network_cidr
+  azs  = data.aws_availability_zones.available.names
 
   public_subnets  = ["10.0.1.0/24"]
   private_subnets = ["10.0.2.0/24", "10.0.3.0/24"]
