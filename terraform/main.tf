@@ -32,8 +32,8 @@ module "vpc" {
   cidr = "10.0.0.0/16"
   azs  = slice(data.aws_availability_zones.available.names, 0, 3)
 
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  public_subnets  = ["10.0.1.0/24"]
+  private_subnets = ["10.0.2.0/24", "10.0.3.0/24"]
 
   enable_nat_gateway   = true
   single_nat_gateway   = true
@@ -66,6 +66,12 @@ module "eks" {
 
   }
 
+  cluster_addons = {
+    coredns                = {}
+    eks-pod-identity-agent = {}
+    kube-proxy             = {}
+    vpc-cni                = {}
+  }
   eks_managed_node_groups = {
     default = {
       name = "node-group-1"
@@ -76,6 +82,8 @@ module "eks" {
       max_size     = 3
       desired_size = 2
     }
-
+  }
+  cluster_timeouts = {
+  create = "10m"
   }
 }
